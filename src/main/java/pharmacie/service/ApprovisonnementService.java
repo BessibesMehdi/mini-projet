@@ -7,7 +7,8 @@ import pharmacie.dao.MedicamentRepository;
 import pharmacie.entity.Categorie;
 import pharmacie.entity.Fournisseur;
 import pharmacie.entity.Medicament;
-
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.SimpleMailMessage;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
