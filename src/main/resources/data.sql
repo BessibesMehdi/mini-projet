@@ -4,11 +4,11 @@
 
 -- Insertion des catégories de médicaments
 INSERT INTO FOURNISSEUR (CODE, NOM, EMAIL, CONTACT, ADRESSE, CODE_POSTAL, VILLE, REGION, PAYS, TELEPHONE, FAX) VALUES
-('F01', 'PharmaPlus', 'contact@pharmaplus.sn', 'Mme Aïssatou Diop', '10 Rue de la Pharmacie', '10000', 'Dakar', 'Dakar', 'Sénégal', '+221-33-821-1234', '+221-33-821-1235'),
-('F02', 'Médicaments du Sahel', 'info@medisahel.sn', 'Dr. Mamadou Ndiaye', '25 Avenue des Médicaments', '20000', 'Saint-Louis', 'Saint-Louis', 'Sénégal', '+221-33-961-5678', '+221-33-961-5679'),
-('F03', 'SantéPlus Distribution', 'ventes@santeplus.sn', 'Mme Fatou Sall', '15 Boulevard de la Santé', '30000', 'Thiès', 'Thiès', 'Sénégal', '+221-33-951-3456', '+221-33-951-3457'),
-('F04', 'PharmaSénégal Importation', 'import@pharmasen.sn', 'Dr. Amadou Ba', '5 Rue des Importateurs', '40000', 'Kaolack', 'Kaolack', 'Sénégal', '+221-33-941-7890', '+221-33-941-7891'),
-('F05', 'Médicaments du Fleuve', 'direction@medifleuve.sn', 'Mme Aïssatou Kane', '30 Avenue du Fleuve Sénégal', '50000', 'Ziguinchor', 'Ziguinchor', 'Sénégal', '+221-33-931-2345', '+221-33-931-2346');
+('F01', 'PharmaPlus', '2020momopopo2020@gmail.com', 'Mme Aïssatou Diop', '10 Rue de la Pharmacie', '10000', 'Dakar', 'Dakar', 'Sénégal', '+221-33-821-1234', '+221-33-821-1235'),
+('F02', 'Médicaments du Sahel', 'dummy2@gmail.com', 'Dr. Mamadou Ndiaye', '25 Avenue des Médicaments', '20000', 'Saint-Louis', 'Saint-Louis', 'Sénégal', '+221-33-961-5678', '+221-33-961-5679'),
+('F03', 'SantéPlus Distribution', 'dummy3@gmail.com', 'Mme Fatou Sall', '15 Boulevard de la Santé', '30000', 'Thiès', 'Thiès', 'Sénégal', '+221-33-951-3456', '+221-33-951-3457'),
+('F04', 'PharmaSénégal Importation', 'dummy4@gmail.com', 'Dr. Amadou Ba', '5 Rue des Importateurs', '40000', 'Kaolack', 'Kaolack', 'Sénégal', '+221-33-941-7890', '+221-33-941-7891'),
+('F05', 'Médicaments du Fleuve', 'dummy5@gmail.com', 'Mme Aïssatou Kane', '30 Avenue du Fleuve Sénégal', '50000', 'Ziguinchor', 'Ziguinchor', 'Sénégal', '+221-33-931-2345', '+221-33-931-2346');
 
 -- 2. Remplissage de la table de jointure (Règle : 2 fournisseurs par catégorie)
 INSERT INTO CATEGORIE (CODE, LIBELLE, DESCRIPTION) VALUES

@@ -25,16 +25,22 @@ public class ApprovisonnementService {
     @Autowired
     private JavaMailSender mailSender;
 
+    @org.springframework.beans.factory.annotation.Value("${mailgun.sender:miniprojet@sandbox325cde38c0694d6dacec14bc062c6f49.mailgun.org}")
+    private String mailSenderAddress;
+
     public void lancerProcedureApprovisionnement() {
+        System.out.println("----- DEBUT PROCEDURE APPROVISIONNEMENT -----");
         // 1. Déterminer les médicaments en sous-stock
         List<Medicament> aReapprovisionner = medicamentRepo.findAll().stream()
                 .filter(m -> m.getUnitesEnStock() < m.getNiveauDeReappro())
                 .collect(Collectors.toList());
 
+        System.out.println("Nb medicaments en sous-stock: " + aReapprovisionner.size());
         if (aReapprovisionner.isEmpty()) return;
 
         // 2. Récupérer tous les fournisseurs
         List<Fournisseur> tousLesFournisseurs = fournisseurRepo.findAll();
+        System.out.println("Nb fournisseurs trouvés: " + tousLesFournisseurs.size());
 
         // 3. Pour chaque fournisseur, filtrer les médicaments qu'il peut fournir
         for (Fournisseur f : tousLesFournisseurs) {
@@ -44,20 +50,27 @@ public class ApprovisonnementService {
                     .map(Categorie::getCode)
                     .collect(Collectors.toList());
 
+            System.out.println("Fournisseur " + f.getCode() + " gere categories: " + codesCategoriesFournisseur);
+
             // Médicaments en alerte appartenant à ces catégories
             List<Medicament> medicamentsPourCeFournisseur = aReapprovisionner.stream()
                     .filter(m -> codesCategoriesFournisseur.contains(m.getCategorie().getCode()))
                     .collect(Collectors.toList());
 
+            System.out.println("Fournisseur " + f.getCode() + " va recevoir " + medicamentsPourCeFournisseur.size() + " medicaments");
+
             if (!medicamentsPourCeFournisseur.isEmpty()) {
                 envoyerMailFournisseur(f, medicamentsPourCeFournisseur);
             }
         }
+        System.out.println("----- FIN PROCEDURE APPROVISIONNEMENT -----");
     }
 
     private void envoyerMailFournisseur(Fournisseur f, List<Medicament> medicaments) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(f.getEmail());
+        // L'expéditeur est désormais injecté via la configuration Spring
+        message.setFrom(mailSenderAddress);  
         message.setSubject("Demande de devis de réapprovisionnement - Pharmacie");
 
         StringBuilder corps = new StringBuilder();
@@ -82,6 +95,14 @@ public class ApprovisonnementService {
         corps.append("Cordialement,\nLa gestion de la pharmacie.");
         
         message.setText(corps.toString());
-        mailSender.send(message);
+        
+        try {
+            System.out.println("Tentative d'envoi d'un email à : " + f.getEmail());
+            mailSender.send(message);
+            System.out.println("Email envoyé avec succès à : " + f.getEmail());
+        } catch (Exception e) {
+            System.err.println("ERREUR LORS DE L'ENVOI DE L'EMAIL à " + f.getEmail());
+            e.printStackTrace();
+        }
     }
 }
